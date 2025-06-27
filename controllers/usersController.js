@@ -37,7 +37,7 @@ exports.usersCreateGet = (req,res)=>{
 exports.usersCreatePost = [
     validateUser,
     (req,res)=>{
-        const errors = validationResult(req);
+        const errors = validationResult(req);//validationResult(req) is used for getting the result of the validateUser 
         if(!errors.isEmpty()){
             return res.status(404).render('createUser',{
                    title:"Create User",
@@ -82,10 +82,10 @@ exports.usersDeletePost = (req, res) => {
     usersStorage.deleteUser(req.params.id);
     res.redirect("/");
 };
-
+//This method is used for getting the search results
 exports.searchUserGet = (req,res) => {
     const {searchItem} = req.query;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;//Regular expression for checking email
     const data = usersStorage.getUsers();
     if(emailRegex.test(searchItem)){
         const resultArray = [];
