@@ -82,5 +82,50 @@ exports.usersDeletePost = (req, res) => {
     usersStorage.deleteUser(req.params.id);
     res.redirect("/");
 };
+
+exports.searchUserGet = (req,res) => {
+    const {searchItem} = req.query;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const data = usersStorage.getUsers();
+    if(emailRegex.test(searchItem)){
+        const resultArray = [];
+        data.map((item)=> {
+            if(searchItem === item.email ){
+                resultArray.push(item);
+            }
+        })
+        if(resultArray.length>0){
+            return res.render('search',{
+                title: "Search Result",
+                resultArray: resultArray,
+            });
+        }
+        return res.render('search',{
+            title: "Search Result",
+            item: "No matching email"
+        })
+    }
+    else{
+        const resultArray = [];
+        data.map((item)=>{
+            if(searchItem.toLowerCase() === item.firstName.toLowerCase() ||
+               searchItem.toLowerCase() === item.lastName.toLowerCase() ||
+               searchItem.toLowerCase() === item.firstName.toLowerCase()+" "+item.lastName.toLowerCase()){
+
+                resultArray.push(item);
+            }
+        });
+        if(resultArray.length>0){
+            return res.render('search',{
+                title: "Search Result",
+                resultArray: resultArray,
+            });
+        }
+        return res.render('search',{
+            title: "Search Result",
+            item: "No matching email"
+        })
+    }
+}
   
   

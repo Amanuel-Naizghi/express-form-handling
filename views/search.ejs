@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <ul>
+    <% if (locals.resultArray) {%>
+      <% resultArray.forEach(function(user) { %>
+        <li>ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %> 
+            Email: <%= user.email%> Age: <%= user.age%> Bio: <%= user.bio%>
+        </li>
+      <% }); %>
+    <% } %>
+    <% if (!locals.resultArray) {%>
+        <p><%= item %> </p>
+    <% } %>
+  </ul>
+  
+  <a href="/create">Create a user</a>
+</body>
+</html>
